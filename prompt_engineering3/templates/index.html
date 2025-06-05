@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Chat Interface</title>
+    <script>
+        async function askQuestion() {
+            const question = document.getElementById('question').value;
+            const response = await fetch('/ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ question: question })
+            });
+            const result = await response.json();
+            document.getElementById('answer').textContent = JSON.stringify(result, null, 2);
+        }
+    </script>
+</head>
+<body>
+    <h1>Chat with the Database</h1>
+    <input type="text" id="question" placeholder="Ask your question..." style="width: 300px;">
+    <button onclick="askQuestion()">Ask</button>
+    <pre id="answer"></pre>
+</body>
+</html>

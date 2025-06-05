@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Sentiment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .review-box {
+            width: 500px;
+            margin: 10px auto;
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Submit Your Review</h1>
+    <textarea id="review" placeholder="Write your review here..." rows="4" cols="50"></textarea>
+    <br>
+    <button onclick="submitReview()">Submit Review</button>
+    <div id="reviews-container" style="margin-top: 20px;"></div>
+    <script>
+        async function submitReview() {
+            const review = document.getElementById('review').value;
+            const response = await fetch('/submit_review', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ review: review })
+            });
+            const data = await response.json();
+            displayReviews(data.reviews);
+        }
+        function displayReviews(reviews) {
+            const reviewsContainer = document.getElementById('reviews-container');
+            reviewsContainer.innerHTML = '';
+            reviews.forEach(review => {
+                const reviewBox = document.createElement('div');
+                reviewBox.className = 'review-box';
+                reviewBox.style.backgroundColor = review.color;
+                reviewBox.innerText = review.text;
+                reviewsContainer.appendChild(reviewBox);
+            });
+        }
+    </script>
+</body>
+</html></title>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood to CSS Colors</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .color-box {
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            margin: 5px;
+        }
+        #color-boxes {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mood to CSS Colors</h1>
+    <input type="text" id="mood" placeholder="Enter your mood">
+    <button onclick="getCSSColors()">Get Colors</button>
+    <div id="color-boxes"></div>
+    
+    <script>
+        async function getCSSColors() {
+            const mood = document.getElementById('mood').value;
+            const response = await fetch('/get_css_colors', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ mood: mood })
+            });  
+            const data = await response.json();
+            displayColors(data.css_code);
+        }
+        function displayColors(css_code) {
+            const colorBoxes = document.getElementById('color-boxes');
+            colorBoxes.innerHTML = '';
+            Object.values(css_code).forEach(color => {
+                const colorBox = document.createElement('div');
+                colorBox.className = 'color-box';
+                colorBox.style.backgroundColor = color;
+                colorBoxes.appendChild(colorBox);
+            });
+        }
+    </script>
+</body>
+</html>
