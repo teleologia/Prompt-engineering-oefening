@@ -1,8 +1,12 @@
 from flask import Flask, request, jsonify, render_template
-from openai import OpenAI
+import openai
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+openai.api_key = os.getenv("OPENAI_API_KEY", "")
+MODEL = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
 app = Flask(__name__)
-# Initialize OpenAI client
-client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
 
 @app.route('/')
 def home():
@@ -10,8 +14,8 @@ def home():
 @app.route('/get_css_colors', methods=['POST'])
 def get_css_colors():
     mood = request.json['mood']
-    response = client.chat.completions.create(
-        model="lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF",
+    response = openai.chat.completions.create(
+        model=MODEL,
         messages=[
             {
                 "role": "system",

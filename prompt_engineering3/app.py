@@ -1,9 +1,13 @@
 from flask import Flask, request, jsonify, render_template
 import sqlite3
 import openai
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+openai.api_key = os.getenv("OPENAI_API_KEY", "")
+MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
 app = Flask(__name__)
-# Configure OpenAI API Key  
-openai.api_key = ''
 def execute_query(query):
     connection = sqlite3.connect('chocolate_shop.db')
     cursor = connection.cursor()
@@ -19,7 +23,7 @@ def home():
 def ask():
     user_question = request.json.get('question')
     response = openai.chat.completions.create(
-        model="gpt-4o",
+        model=MODEL,
         messages=[
             {
                 "role": "system",
