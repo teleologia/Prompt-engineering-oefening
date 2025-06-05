@@ -10,13 +10,23 @@ Dit project bevat drie eenvoudige voorbeelden van toepassingen waarbij prompts w
 
 ## Installatie
 
-1. Installeer de vereiste pakketten:
+1. Zorg dat Python 3 geïnstalleerd is. Controleer dit met:
+   ```bash
+   python3 --version
+   ```
+   Installeer indien nodig een recente versie via [python.org](https://www.python.org) of je pakketbeheerder.
+2. Maak een virtuele omgeving aan en activeer deze:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+3. Installeer de vereiste pakketten:
    ```bash
    pip install -r requirements.txt
    ```
-2. Maak een `.env`-bestand aan met daarin minstens de variabelen `OPENAI_API_KEY` en `OPENAI_MODEL`.
+4. Maak een `.env`-bestand aan met daarin minstens de variabelen `OPENAI_API_KEY` en `OPENAI_MODEL`.
    Deze worden door alle oefeningen gebruikt om het juiste model te kiezen en de API-sleutel te laden.
-3. (Optioneel) Voor project 3 kun je eerst de database aanmaken met:
+5. (Optioneel) Voor project 3 kun je eerst de database aanmaken met:
    ```bash
    python prompt_engineering3/create_db.py
    ```
