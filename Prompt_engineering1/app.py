@@ -1,7 +1,12 @@
 from flask import Flask, request, jsonify, render_template
 import openai
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+openai.api_key = os.getenv("OPENAI_API_KEY", "")
+MODEL = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
 app = Flask(__name__)
-openai.api_key = ''
 reviews = []
 @app.route('/')
 def home():
@@ -10,7 +15,7 @@ def home():
 def submit_review():
     review_text = request.json['review']
     response = openai.chat.completions.create(
-        model='gpt-3.5-turbo',
+        model=MODEL,
         messages=[
             {"role": "system",
              "content": "You are a sentiment analysis tool. you only return: 'neutral', 'positive' or 'negative' Classify the sentiment of the following review."},
